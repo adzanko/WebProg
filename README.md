@@ -1,1 +1,1 @@
-# Hello everyone
+Data scheme is to be found in assets folder.
