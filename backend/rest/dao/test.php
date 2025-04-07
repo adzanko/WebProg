@@ -35,7 +35,7 @@ print_r($userWithType);
 echo "Deleting user...\n";
 $userDao->delete($user['id']);
 
-// Confirm deletion
+// 6. Confirm deletion
 $deletedUser = $userDao->getById($user['id']);
 if (!$deletedUser) {
     echo "User successfully deleted.\n";
@@ -45,3 +45,4 @@ if (!$deletedUser) {
 
 echo "DAO Test complete.\n";
 ?>
+
