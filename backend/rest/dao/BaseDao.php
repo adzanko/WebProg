@@ -13,14 +13,14 @@ class BaseDao {
    }
 
 
-   public function getAll() {
+   public function base_get_all() {
     $stmt = $this->connection->prepare("SELECT * FROM " . $this->table);
     $stmt->execute();
     return $stmt->fetchAll();
 }
 
 
-public function getById($id) {
+public function base_get_by_id($id) {
     $stmt = $this->connection->prepare("SELECT * FROM " . $this->table . " WHERE id = :id");
     $stmt->bindParam(':id', $id);
     $stmt->execute();

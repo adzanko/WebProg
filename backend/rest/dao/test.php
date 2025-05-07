@@ -7,28 +7,28 @@ $userDao = new UserDao();
 
 // 1. Create a user
 echo "Creating new user...\n";
-$userId = $userDao->create("test_user", "test_pass", "test@example.com");
+$userId = $userDao->create_user("test_user");
 echo "New user ID: $userId\n";
 
 // 2. Get user by email
 echo "Fetching user by email...\n";
-$user = $userDao->getByEmail("test@example.com");
+$user = $userDao->get_by_email("test@example.com");
 print_r($user);
 
 // 3. Update username
 echo "Updating username...\n";
-$userDao->update($user['id'], "updated_user", "test@example.com");
+$userDao->update($user['id'], "updated_user");
 
 // Fetch again to confirm
-$updatedUser = $userDao->getById($user['id']);
+$updatedUser = $userDao->get_by_id($user['id']);
 print_r($updatedUser);
 
 // 4. Set personality type (assuming 1 is a valid personality_type_id)
 echo "Assigning personality type...\n";
-$userDao->setPersonalityType($user['id'], 1);
+$userDao->set_personality_type($user['id'], 1);
 
 // Confirm update
-$userWithType = $userDao->getById($user['id']);
+$userWithType = $userDao->get_by_id($user['id']);
 print_r($userWithType);
 
 // 5. Delete user
@@ -36,7 +36,7 @@ echo "Deleting user...\n";
 $userDao->delete($user['id']);
 
 // 6. Confirm deletion
-$deletedUser = $userDao->getById($user['id']);
+$deletedUser = $userDao->get_by_id($user['id']);
 if (!$deletedUser) {
     echo "User successfully deleted.\n";
 } else {

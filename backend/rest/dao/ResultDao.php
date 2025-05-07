@@ -1,36 +1,34 @@
 <?php
 require_once 'BaseDao.php';
 
-class ResultDao extends BaseDao {
-    public function __construct() {
+class ResultDao extends BaseDao
+{
+    public function __construct()
+    {
         parent::__construct("result");
     }
 
-    public function getById($id) {
+    public function get_by_id($id)
+    {
         $stmt = $this->connection->prepare("SELECT * FROM result WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch();
     }
 
-    public function create($personality_type) {
-        $stmt = $this->connection->prepare("INSERT INTO result (personality_type) VALUES (:personality_type)");
-        $stmt->bindParam(':personality_type', $personality_type);
-        $stmt->execute();
-        return $this->connection->lastInsertId();
+    public function create_result($personality_type)
+    {
+        return $this->insert($personality_type);
     }
 
-    public function update($id, $personality_type) {
-        $stmt = $this->connection->prepare("UPDATE result SET personality_type = :personality_type WHERE id = :id");
-        $stmt->bindParam(':personality_type', $personality_type);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+    public function update_result($id, $personality_type)
+    {
+        return $this->update($id, $personality_type);
     }
 
-    public function delete($id) {
-        $stmt = $this->connection->prepare("DELETE FROM result WHERE id = :id");
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+    public function delete_result($id)
+    {
+        return $this->delete($id);
     }
 }
 ?>

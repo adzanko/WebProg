@@ -7,7 +7,7 @@ class UserDao extends BaseDao {
     }
 
     // Get user by email
-    public function getByEmail($email) {
+    public function get_by_email($email) {
         $stmt = $this->connection->prepare("SELECT * FROM user WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
@@ -15,41 +15,25 @@ class UserDao extends BaseDao {
     }
 
     // Get user by ID
-    public function getById($id) {
+    public function get_by_id($id) {
         $stmt = $this->connection->prepare("SELECT * FROM user WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch();
     }
 
-    // Create a new user
-    public function create($username, $password, $email) {
-        $stmt = $this->connection->prepare("
-            INSERT INTO user (username, password, email) 
-            VALUES (:username, :password, :email)
-        ");
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password); // hashing
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        return $this->connection->lastInsertId();
+    public function create_user($user)
+    {
+        return $this->insert($user);
     }
-
-    // Update user details (excluding password)
-    public function update($id, $username, $email) {
-        $stmt = $this->connection->prepare("
-            UPDATE user 
-            SET username = :username, email = :email 
-            WHERE id = :id
-        ");
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+  
+    public function update_user($id, $user)
+    {
+        return $this->update($id, $user);
     }
 
     // Update user password
-    public function updatePassword($id, $password) {
+    public function update_user_password($id, $password) {
         $stmt = $this->connection->prepare("
             UPDATE user SET password = :password WHERE id = :id
         ");
@@ -59,14 +43,14 @@ class UserDao extends BaseDao {
     }
 
     // Delete a user
-    public function delete($id) {
+    public function delete_user($id) {
         $stmt = $this->connection->prepare("DELETE FROM user WHERE id = :id");
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
 
     // Set user's personality type (quiz result)
-    public function setPersonalityType($id, $personality_type_id) {
+    public function set_personality_type($id, $personality_type_id) {
         $stmt = $this->connection->prepare("
             UPDATE user SET personality_type_id = :personality_type_id WHERE id = :id
         ");
@@ -76,7 +60,7 @@ class UserDao extends BaseDao {
     }
 
     // Set user's review ID
-    public function setReviewId($id, $review_id) {
+    public function set_review_id($id, $review_id) {
         $stmt = $this->connection->prepare("
             UPDATE user SET review_id = :review_id WHERE id = :id
         ");
